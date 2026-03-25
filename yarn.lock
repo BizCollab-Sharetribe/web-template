@@ -9305,10 +9305,10 @@ module-details-from-path@^1.0.3:
   resolved "https://registry.yarnpkg.com/module-details-from-path/-/module-details-from-path-1.0.3.tgz#114c949673e2a8a35e9d35788527aa37b679da2b"
   integrity sha512-ySViT69/76t8VhE1xXHK6Ch4NcDd26gx0MzKXLO+F7NOtnqH68d9zF94nT8ZWSxXh8ELOERsnJO/sWt1xZYw5A==
 
-moment-timezone@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.6.0.tgz#c5a6519171f31a64739ea75d33f5c136c08ff608"
-  integrity sha512-ldA5lRNm3iJCWZcBCab4pnNL3HSZYXVb/3TYr75/1WCTWYuTqYUb5f/S384pncYjJ88lbO8Z4uPDvmoluHJc8Q==
+moment-timezone@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.6.1.tgz#c324a71a8285583eb679ced4ba3dcfa53fdce500"
+  integrity sha512-1B9lmAhB9D9/sHaPC1N7wLFEVUoFldxOpOO96lOD1PvJ43vCd0ozDPbu0FEL3++VvawOlDkq8YD373tJmP5JHw==
   dependencies:
     moment "^2.29.4"
 
@@ -11811,10 +11811,10 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-sharetribe-flex-sdk@^1.22.0:
-  version "1.22.0"
-  resolved "https://registry.yarnpkg.com/sharetribe-flex-sdk/-/sharetribe-flex-sdk-1.22.0.tgz#1279db20b84ea6ab3c35835ac59c06fc64644ae9"
-  integrity sha512-+cEheCIpbADxJVnIVs1Bd9btGJBV8+rXg9yCuuzTf7SbwKSU3im/dM2uyLeuuPhGrJ40fX2lqQ1v6rDCG6OE0w==
+sharetribe-flex-sdk@^1.23.0:
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/sharetribe-flex-sdk/-/sharetribe-flex-sdk-1.23.0.tgz#33232212dd9e4fd2d1798d3c1b42ff0abfb08340"
+  integrity sha512-SgNf7wuEnxgkTt8ZcP/6Ud8Eh75QhABSqCfi4WpR1ryBBG2pDkvgM5z0uA3w1KIOkrd70dvJW1u2s69aXBsjAw==
   dependencies:
     axios "^1.5.1"
     js-cookie "^2.1.3"

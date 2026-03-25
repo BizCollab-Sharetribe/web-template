@@ -1,6 +1,8 @@
 import { subUnitDivisors } from '../config/settingsCurrency';
 import { getSupportedProcessesInfo, isBookingProcessAlias } from '../transactions/transaction';
+import { sanitizeText } from './sanitize';
 
+const isTestEnvironment = process.env.NODE_ENV === 'test';
 // Generic helpers for validating config values
 
 const printErrorIfHostedAssetIsMissing = props => {
@@ -348,6 +350,12 @@ const validLabel = label => {
   const isValid = typeof label === 'string';
   const labelMaybe = isValid ? { label } : {};
   return [isValid, labelMaybe];
+};
+
+const validHelpText = helpText => {
+  const isValid = typeof helpText === 'string';
+  const helpTextMaybe = isValid ? { helpText: sanitizeText(helpText) } : {};
+  return [isValid, helpTextMaybe];
 };
 
 const validKey = (key, allKeys) => {
@@ -766,6 +774,8 @@ const validListingFields = (listingFields, listingTypesInUse, categoriesInUse) =
             ? validShowConfig(value)
             : name === 'saveConfig'
             ? validSaveConfig(value)
+            : name === 'helpText'
+            ? validHelpText(value)
             : [true, { [name]: value }];
 
         const hasFoundValid = !(acc.isValid === false || isValid === false);
@@ -882,7 +892,9 @@ const validUserFields = (userFields, userTypesInUse) => {
             ? validUserTypesForUserConfig(value, userTypesInUse)
             : name === 'saveConfig'
             ? validUserSaveConfig(value)
-            : [true, value];
+            : name === 'helpText'
+            ? validHelpText(value)
+            : [true, { [name]: value }];
 
         const hasFoundValid = !(acc.isValid === false || isValid === false);
         // Let's warn about wrong data in listing extended data config
@@ -1524,7 +1536,7 @@ const mergeMapConfig = (hostedMapConfig, defaultMapConfig) => {
 
   const hasApiAccess =
     mapProviderPicked === 'googleMaps' ? !!googleMapsAPIKeyPicked : !!mapboxAccessTokenPicked;
-  if (!hasApiAccess) {
+  if (!hasApiAccess && !isTestEnvironment) {
     console.error(
       `The access tokens are not in place for the selected map provider (${mapProviderPicked})`
     );

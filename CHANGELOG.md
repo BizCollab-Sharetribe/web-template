@@ -14,11 +14,43 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2026-XX-XX
 
+- [fix] Fix too-big font-size in mobile h4 heading and some too large margins.
+  [#806](https://github.com/sharetribe/web-template/pull/806)
+- [fix] StripePaymentForm: fix styleguide example.
+  [#810](https://github.com/sharetribe/web-template/pull/810)
+- [add] Update moment-timezone to v0.6.1 (to take newest update from IANA time zone db)
+  [#809](https://github.com/sharetribe/web-template/pull/809)
+
+## [v10.14.1] 2026-03-18
+
+- [fix] Fix SectionListings not loading correctly when a section has an anchor link
+  ID.[#807](https://github.com/sharetribe/web-template/pull/807)
+- [add] Add loading spinner to CheckoutPage.
+  [#802](https://github.com/sharetribe/web-template/pull/802)
+- [fix] CheckoutPage: fix the initialState not initializing stripeCustomerFetchError.
+  [#799](https://github.com/sharetribe/web-template/pull/799)
+- [fix] Improve tests (avoid warnings and other issues)
+  [#801](https://github.com/sharetribe/web-template/pull/801)
+- [add] Add currently available translations for DE, ES, FR.
+  [#804](https://github.com/sharetribe/web-template/pull/804)
+
+  [v10.14.1]: https://github.com/sharetribe/web-template/compare/v10.14.0...v10.14.1
+
+## [v10.14.0] 2026-03-10
+
+- [add] Support `helpText` from listing and user field asset configs. Displayed below form fields
+  via new HelpText component.[#778](https://github.com/sharetribe/web-template/pull/778)
+- [add] Add featured listings section type (SectionListings.js) that fetches and displays listings
+  in a carousel layout. [#712](https://github.com/sharetribe/web-template/pull/712)
+- [fix] Modify listing card price classes
+  [#796](https://github.com/sharetribe/web-template/pull/796)
+
+  [v10.14.0]: https://github.com/sharetribe/web-template/compare/v10.13.0...v10.14.0
+
 ## [v10.13.0] 2026-02-26
 
 - [change] Hides listing description input/display when option is toggled off in Console > Listing
-  types > Default listing fields
-  [#767](https://github.com/sharetribe/web-template/pull/767)
+  types > Default listing fields [#767](https://github.com/sharetribe/web-template/pull/767)
 - [change] ListingCard: refactor and add aria-label attribute to the component.
   [#787](https://github.com/sharetribe/web-template/pull/787)
 - [fix] FieldSelectIntegerRange: fix aria-attributes.
