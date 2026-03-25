@@ -70,23 +70,23 @@ exports.createIdToken = (idpClientId, user, options) => {
 // this document is expected to be found from
 // api/.well-known/openid-configuration endpoint
 exports.openIdConfiguration = (req, res) => {
-  const rsaPublicKey = process.env.RSA_PUBLIC_KEY;
-  const rsaPrivateKey = process.env.RSA_PRIVATE_KEY;
-  const keyId = process.env.KEY_ID;
+  // const rsaPublicKey = process.env.RSA_PUBLIC_KEY;
+  // const rsaPrivateKey = process.env.RSA_PRIVATE_KEY;
+  // const keyId = process.env.KEY_ID;
 
-  const rsaPublicKey2 = rsaPublicKey.replace(/\\\\n/g, '\n').replace(/\\n/g, '\n');
-  const rsaPrivateKey2 = rsaPrivateKey.replace(/\\\\n/g, '\n').replace(/\\n/g, '\n');
+  // const rsaPublicKey2 = rsaPublicKey.replace(/\\\\n/g, '\n').replace(/\\n/g, '\n');
+  // const rsaPrivateKey2 = rsaPrivateKey.replace(/\\\\n/g, '\n').replace(/\\n/g, '\n');
 
   res.json({
     issuer: issuerUrl,
     jwks_uri: `${issuerUrl}/.well-known/jwks.json`,
     subject_types_supported: ['public'],
     id_token_signing_alg_values_supported: ['RS256'],
-    rsaPublicKey: rsaPublicKey,
-    rsaPrivateKey: rsaPrivateKey,
-    keyId: keyId,
-    rsaPrivateKey2: rsaPrivateKey2,
-    rsaPublicKey2: rsaPublicKey2,
+    // rsaPublicKey: rsaPublicKey,
+    // rsaPrivateKey: rsaPrivateKey,
+    // keyId: keyId,
+    // rsaPrivateKey2: rsaPrivateKey2,
+    // rsaPublicKey2: rsaPublicKey2,
   });
 };
 

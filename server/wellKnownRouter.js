@@ -11,7 +11,8 @@ const router = express.Router();
 // https://www.sharetribe.com/docs/cookbook-social-logins-and-sso/setup-open-id-connect-proxy/
 if (rsaPublicKey && rsaPrivateKey) {
   router.get('/openid-configuration', openIdConfiguration);
-  router.get('/jwks.json', jwksUri([{ alg: 'RS256', rsaPublicKey, keyId }]));
+  const modifiedRsaPublicKey = rsaPublicKey.replace(/\\\\n/g, '\n').replace(/\\n/g, '\n');
+  router.get('/jwks.json', jwksUri([{ alg: 'RS256', rsaPublicKey: modifiedRsaPublicKey, keyId }]));
 }
 
 module.exports = router;

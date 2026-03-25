@@ -63,9 +63,14 @@ const verifyCallback = (req, accessToken, refreshToken, profile, done) => {
   // any line brakes with '\n'.
   // You should also make sure that the key size is big enough.
   const rsaPrivateKey = process.env.RSA_PRIVATE_KEY;
+  const modifiedRsaPrivateKey = rsaPrivateKey.replace(/\\\\n/g, '\n').replace(/\\n/g, '\n');
   const keyId = process.env.KEY_ID;
 
-  createIdToken(idpClientId, user, { signingAlg: 'RS256', rsaPrivateKey, keyId })
+  createIdToken(idpClientId, user, {
+    signingAlg: 'RS256',
+    rsaPrivateKey: modifiedRsaPrivateKey,
+    keyId,
+  })
     .then(idpToken => {
       const userData = {
         email,
@@ -95,7 +100,7 @@ exports.authenticateLinkedin = (req, res, next) => {
     ...(defaultConfirm ? { defaultConfirm } : {}),
     ...(userType ? { userType } : {}),
   };
-  
+
   const paramsAsString = JSON.stringify(params);
 
   passport.authenticate('linkedin', {
