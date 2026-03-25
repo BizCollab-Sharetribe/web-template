@@ -75,6 +75,9 @@ exports.openIdConfiguration = (req, res) => {
     jwks_uri: `${issuerUrl}/.well-known/jwks.json`,
     subject_types_supported: ['public'],
     id_token_signing_alg_values_supported: ['RS256'],
+    rsaPublicKey: process.env.RSA_PUBLIC_KEY,
+    keyId: process.env.KEY_ID,
+    rsaPrivateKey: process.env.RSA_PRIVATE_KEY,
   });
 };
 
@@ -93,7 +96,12 @@ exports.jwksUri = keys => (req, res) => {
     });
   });
 
-  Promise.all(jwkKeys).then(resolvedJwkKeys => {
-    res.json({ keys: resolvedJwkKeys });
-  });
+  Promise.all(jwkKeys)
+    .then(resolvedJwkKeys => {
+      res.json({ keys: resolvedJwkKeys });
+    })
+    .catch(err => {
+      console.log('Error exporting JWK', err);
+      res.status(500).json({ error: 'Error exporting JWK', err });
+    });
 };
