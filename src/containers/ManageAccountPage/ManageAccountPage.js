@@ -143,7 +143,7 @@ export const ManageAccountPageComponent = props => {
           <H3 as="h1">
             <FormattedMessage id="ManageAccountPage.heading" />
           </H3>
-          {hasUserTypeFields ? (
+          {/* {hasUserTypeFields ? (
             <>
               <PrivateDetailsForm
                 className={css.form}
@@ -165,7 +165,7 @@ export const ManageAccountPageComponent = props => {
                 <FormattedMessage id="ManageAccountPage.deleteAccountSubtitle" />
               </H4>
             </>
-          ) : null}
+          ) : null} */}
           {user.id ? (
             <DeleteAccountForm
               intl={intl}
