@@ -23,6 +23,8 @@ const { authenticateFacebook, authenticateFacebookCallback } = require('./api/au
 const { authenticateGoogle, authenticateGoogleCallback } = require('./api/auth/google');
 const { authenticateLinkedin, authenticateLinkedinCallback } = require('./api/auth/linkedin');
 
+const stripeRouter = require('./api/stripe');
+
 const router = express.Router();
 
 // ================ API router middleware: ================ //
@@ -90,5 +92,8 @@ router.get('/auth/linkedin', authenticateLinkedin);
 // with Linkedin. In this route a Passport.js custom callback is used for calling
 // loginWithIdp endpoint in Sharetribe API to authenticate user to Sharetribe
 router.get('/auth/linkedin/callback', authenticateLinkedinCallback);
+
+//stripe
+router.use('/stripe', stripeRouter);
 
 module.exports = router;

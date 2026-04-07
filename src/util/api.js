@@ -151,3 +151,7 @@ export const createUserWithIdp = body => {
 export const deleteUserAccount = body => {
   return post('/api/delete-account', body);
 };
+
+export const createCheckoutSession = body => {
+  return post('/api/stripe/create-checkout-session', body);
+};
