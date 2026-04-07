@@ -1,6 +1,5 @@
-import React from 'react';
-import { Form as FinalForm } from 'react-final-form';
 import classNames from 'classnames';
+import { Form as FinalForm } from 'react-final-form';
 
 import { FormattedMessage, useIntl } from '../../../util/reactIntl';
 
@@ -18,14 +17,27 @@ const renderForm = formRenderProps => {
     payoutDetailsWarning,
     isOwnListing,
     finePrintComponent: FinePrint,
+    getStripeUrl,
+    loading,
+    isAllowed,
+    onContactUser,
   } = formRenderProps;
   const classes = classNames(rootClassName || css.root, className);
 
   return (
     <Form id={formId} onSubmit={handleSubmit} className={classes}>
       <div className={css.submitButton}>
-        <PrimaryButton type="submit">
-          <FormattedMessage id="NegotiationForm.ctaButton" />
+        <PrimaryButton
+          type="button"
+          disabled={loading}
+          onClick={!isAllowed ? getStripeUrl : onContactUser}
+          inProgress={loading}
+        >
+          {isAllowed ? (
+            <FormattedMessage id="NegotiationForm.ctaButtonAllowed" />
+          ) : (
+            <FormattedMessage id="NegotiationForm.ctaButton" />
+          )}
         </PrimaryButton>
         <FinePrint
           payoutDetailsWarning={payoutDetailsWarning}

@@ -762,40 +762,40 @@ export const TransactionPageComponent = props => {
       isInquiryProcess={processName === INQUIRY_PROCESS_NAME}
       config={config}
       {...orderBreakdownMaybe}
-      orderPanel={
-        <OrderPanel
-          className={classNames(css.orderPanel, {
-            [css.orderPanelNextToTitle]: stateData.showDetailCardHeadings,
-          })}
-          titleClassName={css.orderTitle}
-          listing={listing}
-          isOwnListing={isOwnSale}
-          lineItemUnitType={lineItemUnitType}
-          title={listingTitle}
-          titleDesktop={
-            <H4 as="h2" className={css.orderPanelTitle}>
-              {listingDeleted ? (
-                listingTitle
-              ) : (
-                <NamedLink
-                  name="ListingPage"
-                  params={{ id: listing.id?.uuid, slug: createSlug(listingTitle) }}
-                >
-                  {listingTitle}
-                </NamedLink>
-              )}
-            </H4>
-          }
-          author={listing.author}
-          onSubmit={isNegotiationProcess ? onMakeOffer : handleSubmitOrderRequest}
-          onManageDisableScrolling={onManageDisableScrolling}
-          {...restOfProps}
-          validListingTypes={config.listing.listingTypes}
-          marketplaceCurrency={config.currency}
-          dayCountAvailableForBooking={config.stripe.dayCountAvailableForBooking}
-          marketplaceName={config.marketplaceName}
-        />
-      }
+      // orderPanel={
+      //   <OrderPanel
+      //     className={classNames(css.orderPanel, {
+      //       [css.orderPanelNextToTitle]: stateData.showDetailCardHeadings,
+      //     })}
+      //     titleClassName={css.orderTitle}
+      //     listing={listing}
+      //     isOwnListing={isOwnSale}
+      //     lineItemUnitType={lineItemUnitType}
+      //     title={listingTitle}
+      //     titleDesktop={
+      //       <H4 as="h2" className={css.orderPanelTitle}>
+      //         {listingDeleted ? (
+      //           listingTitle
+      //         ) : (
+      //           <NamedLink
+      //             name="ListingPage"
+      //             params={{ id: listing.id?.uuid, slug: createSlug(listingTitle) }}
+      //           >
+      //             {listingTitle}
+      //           </NamedLink>
+      //         )}
+      //       </H4>
+      //     }
+      //     author={listing.author}
+      //     onSubmit={isNegotiationProcess ? onMakeOffer : handleSubmitOrderRequest}
+      //     onManageDisableScrolling={onManageDisableScrolling}
+      //     {...restOfProps}
+      //     validListingTypes={config.listing.listingTypes}
+      //     marketplaceCurrency={config.currency}
+      //     dayCountAvailableForBooking={config.stripe.dayCountAvailableForBooking}
+      //     marketplaceName={config.marketplaceName}
+      //   />
+      // }
     />
   ) : (
     loadingOrFailedFetching

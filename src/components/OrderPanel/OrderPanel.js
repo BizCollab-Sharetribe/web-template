@@ -41,6 +41,7 @@ import PriceVariantPicker from './PriceVariantPicker/PriceVariantPicker';
 import SubmitFinePrint from './SubmitFinePrint/SubmitFinePrint';
 
 import css from './OrderPanel.module.css';
+import { createCheckoutSession } from '../../util/api';
 
 const BookingTimeForm = loadable(() =>
   import(/* webpackChunkName: "BookingTimeForm" */ './BookingTimeForm/BookingTimeForm')
@@ -271,6 +272,7 @@ const hasValidPriceVariants = priceVariants => {
  */
 const OrderPanel = props => {
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const intl = useIntl();
   const location = useLocation();
   const history = useHistory();
@@ -278,6 +280,7 @@ const OrderPanel = props => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
   const {
     rootClassName,
     className,
@@ -305,6 +308,7 @@ const OrderPanel = props => {
     fetchLineItemsError,
     payoutDetailsWarning,
     showListingImage,
+    currentUser,
   } = props;
 
   const publicData = listing?.attributes?.publicData || {};
@@ -426,6 +430,24 @@ const OrderPanel = props => {
   const classes = classNames(rootClassName || css.root, className);
   const titleClasses = classNames(titleClassName || css.orderTitle);
 
+  const { initiateTransactions } = currentUser?.effectivePermissionSet?.attributes || {};
+  const isAllowed = initiateTransactions === 'permission/allow';
+
+  const getStripeUrl = async () => {
+    setLoading(true);
+    try {
+      const { url } = await createCheckoutSession({
+        pathname: window.location.pathname,
+        listingId: listing.id.uuid,
+      });
+
+      window.location.href = url;
+    } catch (error) {
+      console.error('Error fetching Stripe URL:', error);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={classes}>
       <ModalInMobile
@@ -545,6 +567,10 @@ const OrderPanel = props => {
             finePrintComponent={SubmitFinePrint}
             payoutDetailsWarning={payoutDetailsWarning}
             isOwnListing={isOwnListing}
+            getStripeUrl={getStripeUrl}
+            loading={loading}
+            isAllowed={isAllowed}
+            onContactUser={onContactUser}
           />
         ) : showRequestQuoteForm ? (
           <NegotiationRequestQuoteForm
@@ -577,17 +603,26 @@ const OrderPanel = props => {
         ) : (
           <PrimaryButton
             id={ORDER_PANEL_SUBMIT_BUTTON_ID}
-            onClick={handleSubmit(
-              isOwnListing,
-              isClosed,
-              showInquiryForm || showNegotiationForm,
-              onSubmit,
-              history,
-              location
-            )}
-            disabled={isOutOfStock}
+            type="button"
+            onClick={!isAllowed ? getStripeUrl : onContactUser}
+            disabled={loading}
+            inProgress={loading}
+            // onClick={handleSubmit(
+            //   isOwnListing,
+            //   isClosed,
+            //   showInquiryForm || showNegotiationForm,
+            //   onSubmit,
+            //   history,
+            //   location
+            // )}
+            // disabled={isOutOfStock}
           >
-            {isBooking ? (
+            {isAllowed ? (
+              <FormattedMessage id="NegotiationForm.ctaButtonAllowed" />
+            ) : (
+              <FormattedMessage id="NegotiationForm.ctaButton" />
+            )}
+            {/* {isBooking ? (
               <FormattedMessage id="OrderPanel.ctaButtonMessageBooking" />
             ) : isOutOfStock ? (
               <FormattedMessage id="OrderPanel.ctaButtonMessageNoStock" />
@@ -599,7 +634,7 @@ const OrderPanel = props => {
               <FormattedMessage id="OrderPanel.ctaButtonMessageRequestAQuote" />
             ) : (
               <FormattedMessage id="OrderPanel.ctaButtonMessageInquiry" />
-            )}
+            )} */}
           </PrimaryButton>
         )}
       </div>

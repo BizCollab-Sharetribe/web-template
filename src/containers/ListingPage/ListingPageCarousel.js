@@ -93,6 +93,7 @@ import SectionGallery from './SectionGallery';
 import CustomListingFields from './CustomListingFields';
 
 import css from './ListingPage.module.css';
+import Confetti from 'react-confetti';
 
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
@@ -103,10 +104,20 @@ export const ListingPageComponent = props => {
     props.inquiryModalOpenForListingId === props.params.id
   );
   const [mounted, setMounted] = useState(false);
+  const [confettiRecycle, setConfettiRecycle] = useState(
+    new URLSearchParams(props.location?.search).get('status') === 'success'
+  );
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    const timer = setTimeout(() => setConfettiRecycle(false), 7000);
+    return () => clearTimeout(timer);
+  }, [mounted]);
 
   const {
     isAuthenticated,
@@ -328,143 +339,157 @@ export const ListingPageComponent = props => {
     currentListing.attributes.state === LISTING_STATE_CLOSED ? { noIndex: true } : {};
 
   return (
-    <Page
-      title={schemaTitle}
-      scrollingDisabled={scrollingDisabled}
-      author={authorDisplayName}
-      description={description}
-      facebookImages={facebookImages}
-      twitterImages={twitterImages}
-      {...noIndexMaybe}
-      schema={{
-        '@context': 'http://schema.org',
-        '@type': 'Product',
-        description: description,
-        name: schemaTitle,
-        image: schemaImages,
-        offers: {
-          '@type': 'Offer',
-          url: productURL,
-          ...priceForSchemaMaybe(price),
-          ...availabilityMaybe,
-        },
-      }}
-    >
-      <LayoutSingleColumn className={css.pageRoot} topbar={topbar} footer={<FooterContainer />}>
-        <div className={css.contentWrapperForProductLayout}>
-          <div className={css.mainColumnForProductLayout}>
-            {mounted && currentListing.id && noPayoutDetailsSetWithOwnListing ? (
-              <ActionBarMaybe
-                className={css.actionBarForProductLayout}
-                isOwnListing={isOwnListing}
-                listing={currentListing}
-                showNoPayoutDetailsSet={noPayoutDetailsSetWithOwnListing}
-                currentUser={currentUser}
-              />
-            ) : null}
-            {mounted && currentListing.id ? (
-              <ActionBarMaybe
-                className={css.actionBarForProductLayout}
-                isOwnListing={isOwnListing}
-                listing={currentListing}
-                currentUser={currentUser}
-                editParams={{
-                  id: listingId.uuid,
-                  slug: listingSlug,
-                  type: listingPathParamType,
-                  tab: listingTab,
-                }}
-              />
-            ) : null}
-            {showListingImage && (
-              <SectionGallery
-                listing={currentListing}
-                variantPrefix={config.layout.listingImage.variantPrefix}
-              />
-            )}
-            <div
-              className={showListingImage ? css.mobileHeading : css.noListingImageHeadingProduct}
-            >
-              {showListingImage ? (
-                <H2 as="h1" className={css.orderPanelTitle}>
-                  <FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />
-                </H2>
-              ) : (
-                <H3 as="h1" className={css.orderPanelTitle}>
-                  <FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />
-                </H3>
+    <>
+      {confettiRecycle && (
+        <Confetti
+          width={window?.innerWidth - 10}
+          height={window?.innerHeight}
+          numberOfPieces={500}
+          recycle={confettiRecycle}
+        />
+      )}
+
+      <Page
+        title={schemaTitle}
+        scrollingDisabled={scrollingDisabled}
+        author={authorDisplayName}
+        description={description}
+        facebookImages={facebookImages}
+        twitterImages={twitterImages}
+        {...noIndexMaybe}
+        schema={{
+          '@context': 'http://schema.org',
+          '@type': 'Product',
+          description: description,
+          name: schemaTitle,
+          image: schemaImages,
+          offers: {
+            '@type': 'Offer',
+            url: productURL,
+            ...priceForSchemaMaybe(price),
+            ...availabilityMaybe,
+          },
+        }}
+      >
+        <LayoutSingleColumn className={css.pageRoot} topbar={topbar} footer={<FooterContainer />}>
+          <div className={css.contentWrapperForProductLayout}>
+            <div className={css.mainColumnForProductLayout}>
+              {mounted && currentListing.id && noPayoutDetailsSetWithOwnListing ? (
+                <ActionBarMaybe
+                  className={css.actionBarForProductLayout}
+                  isOwnListing={isOwnListing}
+                  listing={currentListing}
+                  showNoPayoutDetailsSet={noPayoutDetailsSetWithOwnListing}
+                  currentUser={currentUser}
+                />
+              ) : null}
+              {mounted && currentListing.id ? (
+                <ActionBarMaybe
+                  className={css.actionBarForProductLayout}
+                  isOwnListing={isOwnListing}
+                  listing={currentListing}
+                  currentUser={currentUser}
+                  editParams={{
+                    id: listingId.uuid,
+                    slug: listingSlug,
+                    type: listingPathParamType,
+                    tab: listingTab,
+                  }}
+                />
+              ) : null}
+              {showListingImage && (
+                <SectionGallery
+                  listing={currentListing}
+                  variantPrefix={config.layout.listingImage.variantPrefix}
+                />
               )}
+              <div
+                className={showListingImage ? css.mobileHeading : css.noListingImageHeadingProduct}
+              >
+                {showListingImage ? (
+                  <H2 as="h1" className={css.orderPanelTitle}>
+                    <FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />
+                  </H2>
+                ) : (
+                  <H3 as="h1" className={css.orderPanelTitle}>
+                    <FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />
+                  </H3>
+                )}
+              </div>
+              {showDescription && <SectionText text={description} showAsIngress />}
+
+              <CustomListingFields
+                publicData={publicData}
+                metadata={metadata}
+                listingFieldConfigs={listingConfig.listingFields}
+                categoryConfiguration={config.categoryConfiguration}
+                intl={intl}
+              />
+
+              <SectionMapMaybe
+                geolocation={geolocation}
+                publicData={publicData}
+                listingId={currentListing.id}
+                mapsConfig={config.maps}
+              />
+              <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
+              <SectionAuthorMaybe
+                title={title}
+                listing={currentListing}
+                authorDisplayName={authorDisplayName}
+                onContactUser={onContactUser}
+                isInquiryModalOpen={isAuthenticated && inquiryModalOpen}
+                onCloseInquiryModal={() => setInquiryModalOpen(false)}
+                sendInquiryError={sendInquiryError}
+                sendInquiryInProgress={sendInquiryInProgress}
+                onSubmitInquiry={onSubmitInquiry}
+                currentUser={currentUser}
+                onManageDisableScrolling={onManageDisableScrolling}
+              />
             </div>
-            {showDescription && <SectionText text={description} showAsIngress />}
-
-            <CustomListingFields
-              publicData={publicData}
-              metadata={metadata}
-              listingFieldConfigs={listingConfig.listingFields}
-              categoryConfiguration={config.categoryConfiguration}
-              intl={intl}
-            />
-
-            <SectionMapMaybe
-              geolocation={geolocation}
-              publicData={publicData}
-              listingId={currentListing.id}
-              mapsConfig={config.maps}
-            />
-            <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
-            <SectionAuthorMaybe
-              title={title}
-              listing={currentListing}
-              authorDisplayName={authorDisplayName}
-              onContactUser={onContactUser}
-              isInquiryModalOpen={isAuthenticated && inquiryModalOpen}
-              onCloseInquiryModal={() => setInquiryModalOpen(false)}
-              sendInquiryError={sendInquiryError}
-              sendInquiryInProgress={sendInquiryInProgress}
-              onSubmitInquiry={onSubmitInquiry}
-              currentUser={currentUser}
-              onManageDisableScrolling={onManageDisableScrolling}
-            />
-          </div>
-          <div className={css.orderColumnForProductLayout}>
-            <OrderPanel
-              className={classNames(css.productOrderPanel, {
-                [css.imagesEnabled]: showListingImage,
-              })}
-              listing={currentListing}
-              isOwnListing={isOwnListing}
-              onSubmit={handleOrderSubmit}
-              authorLink={
-                <NamedLink
-                  className={css.authorNameLink}
-                  name={isVariant ? 'ListingPageVariant' : 'ListingPage'}
-                  params={params}
-                  to={{ hash: '#author' }}
-                >
-                  {authorDisplayName}
-                </NamedLink>
-              }
-              title={<FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />}
-              titleDesktop={
-                <H4 as="h1" className={css.orderPanelTitle}>
+            <div className={css.orderColumnForProductLayout}>
+              <OrderPanel
+                className={classNames(css.productOrderPanel, {
+                  [css.imagesEnabled]: showListingImage,
+                })}
+                listing={currentListing}
+                isOwnListing={isOwnListing}
+                onSubmit={handleOrderSubmit}
+                authorLink={
+                  <NamedLink
+                    className={css.authorNameLink}
+                    name={isVariant ? 'ListingPageVariant' : 'ListingPage'}
+                    params={params}
+                    to={{ hash: '#author' }}
+                  >
+                    {authorDisplayName}
+                  </NamedLink>
+                }
+                title={
                   <FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />
-                </H4>
-              }
-              payoutDetailsWarning={payoutDetailsWarning}
-              author={ensuredAuthor}
-              onManageDisableScrolling={onManageDisableScrolling}
-              onContactUser={onContactUser}
-              {...restOfProps}
-              validListingTypes={config.listing.listingTypes}
-              marketplaceCurrency={config.currency}
-              dayCountAvailableForBooking={config.stripe.dayCountAvailableForBooking}
-              marketplaceName={config.marketplaceName}
-              showListingImage={showListingImage}
-            />
+                }
+                titleDesktop={
+                  <H4 as="h1" className={css.orderPanelTitle}>
+                    <FormattedMessage id="ListingPage.orderTitle" values={{ title: richTitle }} />
+                  </H4>
+                }
+                payoutDetailsWarning={payoutDetailsWarning}
+                author={ensuredAuthor}
+                onManageDisableScrolling={onManageDisableScrolling}
+                onContactUser={onContactUser}
+                {...restOfProps}
+                validListingTypes={config.listing.listingTypes}
+                marketplaceCurrency={config.currency}
+                dayCountAvailableForBooking={config.stripe.dayCountAvailableForBooking}
+                marketplaceName={config.marketplaceName}
+                showListingImage={showListingImage}
+                currentUser={currentUser}
+              />
+            </div>
           </div>
-        </div>
-      </LayoutSingleColumn>
-    </Page>
+        </LayoutSingleColumn>
+      </Page>
+    </>
   );
 };
 

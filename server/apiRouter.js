@@ -24,6 +24,7 @@ const { authenticateGoogle, authenticateGoogleCallback } = require('./api/auth/g
 const { authenticateLinkedin, authenticateLinkedinCallback } = require('./api/auth/linkedin');
 
 const stripeRouter = require('./api/stripe');
+const unlockLead = require('./api/unlock-lead');
 
 const router = express.Router();
 
@@ -59,6 +60,7 @@ router.post('/transaction-line-items', transactionLineItems);
 router.post('/initiate-privileged', initiatePrivileged);
 router.post('/transition-privileged', transitionPrivileged);
 router.post('/delete-account', deleteAccount);
+router.post('/unlock-lead', unlockLead);
 
 // Create user with identity provider (e.g. Facebook or Google)
 // This endpoint is called to create a new user after user has confirmed

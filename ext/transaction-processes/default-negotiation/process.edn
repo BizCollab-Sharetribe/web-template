@@ -11,7 +11,8 @@
   {:name :transition/inquire,
    :to :state/inquiry,
    :actor :actor.role/provider,
-   :actions []}
+   :actions [{:name :action/update-protected-data}]
+   :privileged? true}
   {:name :transition/request-quote,
    :to :state/quote-requested,
    :actor :actor.role/customer,

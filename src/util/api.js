@@ -155,3 +155,7 @@ export const deleteUserAccount = body => {
 export const createCheckoutSession = body => {
   return post('/api/stripe/create-checkout-session', body);
 };
+
+export const unlockLead = body => {
+  return post('/api/unlock-lead', body);
+};

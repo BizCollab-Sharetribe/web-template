@@ -1426,5 +1426,6 @@
   "UserNav.screenreader.userNav": "User profile navigation",
   "UserNav.yourListings": "Your listings",
   "AuthenticationPage.loginWithLinkedin": "Continue with Linkedin",
-  "AuthenticationPage.signupWithLinkedin": "Continue with Linkedin"
+  "AuthenticationPage.signupWithLinkedin": "Continue with Linkedin",
+  "NegotiationForm.ctaButtonAllowed": "Contact customer"
 }

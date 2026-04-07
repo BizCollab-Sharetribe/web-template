@@ -5,13 +5,7 @@ const updateUserProfile = async data => {
   try {
     const iSdk = getIntegrationSdk();
 
-    const {
-      created,
-      id,
-      client_reference_id,
-      amount_total,
-      metadata,
-    } = data;
+    const { created, id, client_reference_id, amount_total, metadata } = data;
 
     if (!client_reference_id) {
       console.log('client_reference_id missing in checkout session completed');
@@ -35,6 +29,11 @@ const updateUserProfile = async data => {
         ],
         leadsAvailable: leadsAvailable + 1,
       },
+    });
+
+    await iSdk.users.updatePermissions({
+      id: user.id,
+      initiateTransactions: 'permission/allow',
     });
   } catch (error) {
     console.log('Failed to update creator profile', error);

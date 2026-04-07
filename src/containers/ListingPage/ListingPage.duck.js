@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { types as sdkTypes, createImageVariantConfig } from '../../util/sdkLoader';
 import { storableError } from '../../util/errors';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
-import { transactionLineItems } from '../../util/api';
+import { transactionLineItems, unlockLead } from '../../util/api';
 import * as log from '../../util/log';
 import { denormalisedResponseEntities } from '../../util/data';
 import {
@@ -248,8 +248,10 @@ const sendInquiryPayloadCreator = (
     processAlias,
     params: { listingId },
   };
-  return sdk.transactions
-    .initiate(bodyParams)
+
+  // return sdk.transactions
+  //   .initiate(bodyParams)
+  return unlockLead({ bodyParams })
     .then(response => {
       const transactionId = response.data.data.id;
 
