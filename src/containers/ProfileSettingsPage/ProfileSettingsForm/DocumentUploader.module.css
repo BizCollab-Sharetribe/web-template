@@ -1,0 +1,93 @@
+@import '../../../styles/customMediaQueries.css';
+
+.root {
+  margin-top: 12px;
+
+  @media (--viewportMedium) {
+    margin-top: 16px;
+  }
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.uploadButton {
+  /* Override default Button to look like a secondary action */
+  min-height: 42px;
+  padding: 0 24px;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--colorGrey50);
+  border: 1px solid var(--colorGrey100);
+  border-radius: 4px;
+  padding: 10px 14px;
+}
+
+.fileLink {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--colorPrimary, var(--marketplaceColor));
+  font-size: 14px;
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.removeButton {
+  /* Reset button styles */
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Size */
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+
+  /* Look */
+  font-size: 20px;
+  line-height: 1;
+  color: var(--colorGrey600);
+  background-color: transparent;
+  border: 1px solid var(--colorGrey200);
+  transition: var(--transitionStyleButton);
+
+  &:hover {
+    color: var(--colorFail);
+    border-color: var(--colorFail);
+  }
+
+  &:focus {
+    outline: 2px solid var(--colorPrimary, var(--marketplaceColor));
+  }
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+}
+
+.errorText {
+  composes: h5 from global;
+  color: var(--colorFail);
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+.hint {
+  composes: textSmall from global;
+  color: var(--colorGrey600);
+  margin-top: 8px;
+  margin-bottom: 0;
+}

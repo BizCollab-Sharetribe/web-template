@@ -434,6 +434,10 @@ const OrderPanel = props => {
   const isAllowed = initiateTransactions === 'permission/allow';
 
   const getStripeUrl = async () => {
+    if (isOwnListing || isClosed) {
+      return;
+    }
+
     setLoading(true);
     try {
       const { url } = await createCheckoutSession({

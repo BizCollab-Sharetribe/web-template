@@ -25,6 +25,8 @@ const { authenticateLinkedin, authenticateLinkedinCallback } = require('./api/au
 
 const stripeRouter = require('./api/stripe');
 const unlockLead = require('./api/unlock-lead');
+const generatePresignedUrl = require('./api/presigned-url');
+const middleware = require('./middleware');
 
 const router = express.Router();
 
@@ -97,5 +99,7 @@ router.get('/auth/linkedin/callback', authenticateLinkedinCallback);
 
 //stripe
 router.use('/stripe', stripeRouter);
+
+router.post('/presigned-url', middleware.auth, generatePresignedUrl);
 
 module.exports = router;

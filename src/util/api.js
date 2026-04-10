@@ -159,3 +159,7 @@ export const createCheckoutSession = body => {
 export const unlockLead = body => {
   return post('/api/unlock-lead', body);
 };
+
+export const generatePresignedUrl = body => {
+  return post('/api/presigned-url', body);
+};

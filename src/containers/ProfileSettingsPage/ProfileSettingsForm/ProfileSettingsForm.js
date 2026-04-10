@@ -23,6 +23,7 @@ import {
   CustomExtendedDataField,
 } from '../../../components';
 
+import DocumentUploader from './DocumentUploader';
 import css from './ProfileSettingsForm.module.css';
 
 const ACCEPT_IMAGES = 'image/*';
@@ -269,6 +270,8 @@ class ProfileSettingsFormComponent extends Component {
             false
           );
 
+          const isProvider = userTypeConfig?.userType === 'provider';
+
           return (
             <Form
               className={classes}
@@ -394,6 +397,30 @@ class ProfileSettingsFormComponent extends Component {
                   <CustomExtendedDataField key={key} {...fieldProps} formId={formId} />
                 ))}
               </div>
+
+              {isProvider ? (
+                <div className={css.sectionContainer}>
+                  <H4 as="h2" className={css.sectionTitle}>
+                    <FormattedMessage id="ProfileSettingsForm.verificationDocumentHeading" />
+                  </H4>
+                  <p className={css.extraInfo}>
+                    <FormattedMessage id="ProfileSettingsForm.verificationDocumentInfo" />
+                  </p>
+                  <Field name="verificationDocumentUrl">
+                    {({ input }) => (
+                      <DocumentUploader
+                        fieldName="verificationDocumentUrl"
+                        value={input.value || null}
+                        onChange={url => {
+                          input.onChange(url);
+                          input.onBlur();
+                        }}
+                      />
+                    )}
+                  </Field>
+                </div>
+              ) : null}
+
               {submitError}
               <Button
                 className={css.submitButton}

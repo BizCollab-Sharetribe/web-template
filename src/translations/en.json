@@ -1427,5 +1427,10 @@
   "UserNav.yourListings": "Your listings",
   "AuthenticationPage.loginWithLinkedin": "Continue with Linkedin",
   "AuthenticationPage.signupWithLinkedin": "Continue with Linkedin",
-  "NegotiationForm.ctaButtonAllowed": "Contact customer"
+  "NegotiationForm.ctaButtonAllowed": "Contact customer",
+  "ProfileSettingsForm.verificationDocumentHeading": "Verification document",
+  "ProfileSettingsForm.verificationDocumentInfo": "Upload a document or image to verify your identity or credentials.",
+  "DocumentUploader.uploadButton": "Upload document or image",
+  "DocumentUploader.uploadFailed": "Upload failed. Please check your file and try again.",
+  "DocumentUploader.removeAriaLabel": "Remove uploaded file"
 }
