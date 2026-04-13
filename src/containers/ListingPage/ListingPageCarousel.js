@@ -110,6 +110,10 @@ export const ListingPageComponent = props => {
 
   useEffect(() => {
     setMounted(true);
+
+    if (confettiRecycle) {
+      setInquiryModalOpen(true);
+    }
   }, []);
 
   useEffect(() => {

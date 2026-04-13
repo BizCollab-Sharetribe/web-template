@@ -46,6 +46,38 @@
   }
 }
 
+/* Hurdle details link */
+.hurdleDetailsLink {
+  display: inline;
+  margin: 16px 24px;
+  font-size: 14px;
+  text-decoration: underline;
+
+  @media (--viewportMedium) {
+    margin: 16px 24px;
+  }
+  @media (--viewportLarge) {
+    margin: 16px 0;
+  }
+}
+
+/* Hurdle details modal content */
+.hurdleDetailsModalContent {
+  padding: 0 24px 24px;
+
+  @media (--viewportMedium) {
+    padding: 0 0 32px;
+  }
+}
+
+.hurdleDetailsHeading {
+  margin-bottom: 16px;
+
+  @media (--viewportMedium) {
+    margin-bottom: 24px;
+  }
+}
+
 /* DetailCardImage subcomponent */
 .detailCardImageWrapper {
   /* Layout */

@@ -8,7 +8,17 @@ import { isMobileSafari } from '../../../util/userAgent';
 import { createSlug } from '../../../util/urlHelpers';
 import { displayPrice } from '../../../util/configHelpers';
 
-import { AvatarLarge, NamedLink, UserDisplayName } from '../../../components';
+import {
+  AvatarLarge,
+  H2,
+  H3,
+  InlineTextButton,
+  Modal,
+  NamedLink,
+  SectionText,
+  UserDisplayName,
+} from '../../../components';
+import CustomListingFields from '../../ListingPage/CustomListingFields';
 
 import { stateDataShape } from '../TransactionPage.stateData';
 import SendMessageForm from '../SendMessageForm/SendMessageForm';
@@ -105,6 +115,7 @@ export class TransactionPanelComponent extends Component {
     super(props);
     this.state = {
       sendMessageFormFocused: false,
+      hurdleDetailsModalOpen: false,
     };
     this.isMobSaf = false;
     this.sendMessageFormName = 'TransactionPanel.SendMessageForm';
@@ -191,6 +202,7 @@ export class TransactionPanelComponent extends Component {
       config,
       hasViewingRights,
       transactionFieldsComponent,
+      onManageDisableScrolling,
     } = this.props;
 
     const hasTransitions = transitions.length > 0;
@@ -330,6 +342,45 @@ export class TransactionPanelComponent extends Component {
                 />
               </div>
             ) : null}
+
+            <InlineTextButton
+              className={css.hurdleDetailsLink}
+              onClick={() => this.setState({ hurdleDetailsModalOpen: true })}
+            >
+              <FormattedMessage id="TransactionPanel.checkHurdleDetails" />
+            </InlineTextButton>
+
+            <Modal
+              id="TransactionPanel.hurdleDetailsModal"
+              isOpen={this.state.hurdleDetailsModalOpen}
+              onClose={() => this.setState({ hurdleDetailsModalOpen: false })}
+              onManageDisableScrolling={onManageDisableScrolling || (() => {})}
+              usePortal
+            >
+              <div className={css.hurdleDetailsModalContent}>
+                <div className={css.hurdleDetailsHeading}>
+                  {showListingImage ? (
+                    <H2 as="h1">{listingTitle}</H2>
+                  ) : (
+                    <H3 as="h1">{listingTitle}</H3>
+                  )}
+                </div>
+                {listing?.attributes?.publicData?.listingType &&
+                  config.listing.listingTypes
+                    .find(c => c.listingType === listing.attributes.publicData.listingType)
+                    ?.defaultListingFields?.description && (
+                  <SectionText text={listing?.attributes?.description || ''} showAsIngress />
+                )}
+                <CustomListingFields
+                  publicData={listing?.attributes?.publicData || {}}
+                  metadata={listing?.attributes?.metadata || {}}
+                  listingFieldConfigs={config.listing.listingFields}
+                  categoryConfiguration={config.categoryConfiguration}
+                  intl={intl}
+                />
+              </div>
+            </Modal>
+
             <FeedSection
               rootClassName={css.feedContainer}
               hasMessages={messages.length > 0}
