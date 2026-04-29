@@ -72,7 +72,7 @@ const getDisplayName = url => {
  * @param {string} [props.storagePath] - Storage path prefix for the R2 bucket
  */
 const DocumentUploader = props => {
-  const { fieldName, onChange, value, storagePath = 'verification-documents' } = props;
+  const { fieldName, onChange, value, storagePath = 'verification-documents', disabled = false } = props;
   const intl = useIntl();
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
@@ -123,7 +123,7 @@ const DocumentUploader = props => {
         accept={ACCEPT_DOCS_AND_IMAGES}
         className={css.hiddenInput}
         onChange={handleFileChange}
-        disabled={uploading}
+        disabled={uploading || disabled}
       />
 
       {hasFile ? (
@@ -141,6 +141,7 @@ const DocumentUploader = props => {
             type="button"
             className={css.removeButton}
             onClick={handleRemove}
+            disabled={disabled}
             aria-label={intl.formatMessage({ id: 'DocumentUploader.removeAriaLabel' })}
           >
             &times;
@@ -152,7 +153,7 @@ const DocumentUploader = props => {
           className={css.uploadButton}
           onClick={handleBrowseClick}
           inProgress={uploading}
-          disabled={uploading}
+          disabled={uploading || disabled}
         >
           {uploading ? (
             <IconSpinner className={css.spinner} />

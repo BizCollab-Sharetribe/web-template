@@ -194,10 +194,13 @@ export const InboxItem = props => {
     [css.stateNoActionNeeded]: !actionNeeded,
   });
 
+  const { isVerified } = provider.attributes.profile.metadata || {};
+
   return (
     <div className={css.item}>
       <div className={css.itemAvatar}>
         <Avatar user={otherUser} />
+        {isVerified ? <span className={css.verifiedBadge}>&#10003; Verified</span> : null}
       </div>
       <NamedLink
         className={linkClasses}

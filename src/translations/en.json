@@ -1436,11 +1436,17 @@
   "AuthenticationPage.loginWithLinkedin": "Continue with Linkedin",
   "AuthenticationPage.signupWithLinkedin": "Continue with Linkedin",
   "NegotiationForm.ctaButtonAllowed": "Contact customer",
-  "ProfileSettingsForm.verificationDocumentHeading": "Verification document",
+  "ProfileSettingsForm.verificationDocumentHeading": "Get Verified",
   "ProfileSettingsForm.verificationDocumentInfo": "Upload a document or image to verify your identity or credentials.",
   "DocumentUploader.uploadButton": "Upload document or image",
   "DocumentUploader.uploadFailed": "Upload failed. Please check your file and try again.",
   "DocumentUploader.removeAriaLabel": "Remove uploaded file",
   "TransactionPanel.checkHurdleDetails": "Check hurdle details",
-  "TransactionPanel.hurdleDetailsModalTitle": "Hurdle details"
+  "TransactionPanel.hurdleDetailsModalTitle": "Hurdle details",
+  "ProfileSettingsForm.verificationSectionSubheading": "Submit all three fields below. Admin will review it, and you will get a verified check.",
+  "ProfileSettingsForm.abnLabel": "ABN",
+  "ProfileSettingsForm.abnPlaceholder": "Enter your ABN",
+  "ProfileSettingsForm.githubUsernameLabel": "GitHub Username",
+  "ProfileSettingsForm.githubUsernamePlaceholder": "Enter your GitHub username",
+  "ProfileSettingsForm.verifiedBadge": "✓ Verified"
 }

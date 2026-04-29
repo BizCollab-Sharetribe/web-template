@@ -149,6 +149,7 @@ class ProfileSettingsFormComponent extends Component {
             values,
             userFields,
             userTypeConfig,
+            isVerified,
           } = fieldRenderProps;
 
           const user = ensureCurrentUser(currentUser);
@@ -400,9 +401,39 @@ class ProfileSettingsFormComponent extends Component {
 
               {isProvider ? (
                 <div className={css.sectionContainer}>
-                  <H4 as="h2" className={css.sectionTitle}>
-                    <FormattedMessage id="ProfileSettingsForm.verificationDocumentHeading" />
-                  </H4>
+                  <div className={css.verificationHeadingRow}>
+                    <H4 as="h2" className={css.sectionTitle}>
+                      <FormattedMessage id="ProfileSettingsForm.verificationDocumentHeading" />
+                    </H4>
+                    {isVerified ? (
+                      <span className={css.verifiedBadge}>
+                        <FormattedMessage id="ProfileSettingsForm.verifiedBadge" />
+                      </span>
+                    ) : null}
+                  </div>
+                  <p className={css.extraInfo}>
+                    <FormattedMessage id="ProfileSettingsForm.verificationSectionSubheading" />
+                  </p>
+                  <FieldTextInput
+                    className={css.row}
+                    type="text"
+                    id="abn"
+                    name="abn"
+                    label={intl.formatMessage({ id: 'ProfileSettingsForm.abnLabel' })}
+                    placeholder={intl.formatMessage({ id: 'ProfileSettingsForm.abnPlaceholder' })}
+                    disabled={isVerified}
+                  />
+                  <FieldTextInput
+                    className={classNames(css.row, css.fieldSpacingTop)}
+                    type="text"
+                    id="githubUsername"
+                    name="githubUsername"
+                    label={intl.formatMessage({ id: 'ProfileSettingsForm.githubUsernameLabel' })}
+                    placeholder={intl.formatMessage({
+                      id: 'ProfileSettingsForm.githubUsernamePlaceholder',
+                    })}
+                    disabled={isVerified}
+                  />
                   <p className={css.extraInfo}>
                     <FormattedMessage id="ProfileSettingsForm.verificationDocumentInfo" />
                   </p>
@@ -411,6 +442,7 @@ class ProfileSettingsFormComponent extends Component {
                       <DocumentUploader
                         fieldName="verificationDocumentUrl"
                         value={input.value || null}
+                        disabled={isVerified}
                         onChange={url => {
                           input.onChange(url);
                           input.onBlur();

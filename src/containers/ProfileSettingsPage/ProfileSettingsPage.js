@@ -95,6 +95,8 @@ export const ProfileSettingsPageComponent = props => {
       displayName,
       bio: rawBio,
       verificationDocumentUrl,
+      githubUsername,
+      abn,
       ...rest
     } = values;
 
@@ -112,10 +114,12 @@ export const ProfileSettingsPageComponent = props => {
       bio,
       publicData: {
         ...pickUserFieldsData(rest, 'public', userType, userFields),
-        ...(verificationDocumentUrl !== undefined ? { verificationDocumentUrl } : {}),
       },
       protectedData: {
         ...pickUserFieldsData(rest, 'protected', userType, userFields),
+        ...(verificationDocumentUrl !== undefined ? { verificationDocumentUrl } : {}),
+        ...(githubUsername !== undefined ? { githubUsername } : {}),
+        ...(abn !== undefined ? { abn } : {}),
       },
       privateData: {
         ...pickUserFieldsData(rest, 'private', userType, userFields),
@@ -141,6 +145,7 @@ export const ProfileSettingsPageComponent = props => {
     publicData,
     protectedData,
     privateData,
+    metadata
   } = user?.attributes.profile;
   // I.e. the status is active, not pending-approval or banned
   const isUnauthorizedUser = currentUser && !isUserAuthorized(currentUser);
@@ -163,7 +168,9 @@ export const ProfileSettingsPageComponent = props => {
         ...displayNameMaybe,
         bio,
         profileImage: user.profileImage,
-        verificationDocumentUrl: publicData?.verificationDocumentUrl || null,
+        verificationDocumentUrl: protectedData?.verificationDocumentUrl || null,
+        githubUsername: protectedData?.githubUsername || null,
+        abn: protectedData?.abn || null,
         ...initialValuesForUserFields(publicData, 'public', userType, userFields),
         ...initialValuesForUserFields(protectedData, 'protected', userType, userFields),
         ...initialValuesForUserFields(privateData, 'private', userType, userFields),
@@ -178,6 +185,7 @@ export const ProfileSettingsPageComponent = props => {
       marketplaceName={config.marketplaceName}
       userFields={publicUserFields}
       userTypeConfig={userTypeConfig}
+      isVerified={metadata?.isVerified}
     />
   ) : null;
 
@@ -239,11 +247,8 @@ const mapDispatchToProps = dispatch => ({
   onUpdateProfile: data => dispatch(updateProfile(data)),
 });
 
-const ProfileSettingsPage = compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(ProfileSettingsPageComponent);
+const ProfileSettingsPage = compose(connect(mapStateToProps, mapDispatchToProps))(
+  ProfileSettingsPageComponent
+);
 
 export default ProfileSettingsPage;

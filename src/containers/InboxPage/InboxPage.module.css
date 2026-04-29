@@ -194,6 +194,7 @@
   display: flex;
   align-items: center;
   margin-right: 8px;
+  position: relative;
 
   @media (--viewportMedium) {
     display: block;
@@ -203,6 +204,26 @@
   @media (--viewportLarge) {
     margin-top: 3px;
     margin-right: 7px;
+  }
+}
+
+.verifiedBadge {
+  position: absolute;
+  top: -7px;
+  right: -12px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background-color: #e6f4ea;
+  color: #1e7e34;
+  font-size: 10px;
+  font-weight: var(--fontWeightMedium);
+  white-space: nowrap;
+  line-height: 1.4;
+  border: 1px solid #b7dfbf;
+
+  @media (--viewportMedium) {
+    top: -15px;
+    right: -10px;
   }
 }
 
