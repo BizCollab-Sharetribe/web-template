@@ -438,6 +438,17 @@ const OrderPanel = props => {
       return;
     }
 
+    const { bio, privateData } = currentUser?.attributes?.profile || {};
+    const { area_of_expertise = [], industry_expertise = [] } = privateData || {};
+
+    if (!bio || area_of_expertise.length === 0 || industry_expertise.length === 0) {
+      alert(
+        'Please complete your profile before unlocking hurdle. Bio, area of expertise and industry expertise are required.'
+      );
+      history.push('/profile-settings');
+      return;
+    }
+
     setLoading(true);
     try {
       const { url } = await createCheckoutSession({
