@@ -36,7 +36,15 @@ import {
   resolveLatestProcessName,
 } from '../../transactions/transaction';
 
-import { ModalInMobile, PrimaryButton, AvatarSmall, H1, H2 } from '../../components';
+import {
+  Modal,
+  ModalInMobile,
+  PrimaryButton,
+  AvatarSmall,
+  H1,
+  H2,
+  IconAlert,
+} from '../../components';
 import PriceVariantPicker from './PriceVariantPicker/PriceVariantPicker';
 import SubmitFinePrint from './SubmitFinePrint/SubmitFinePrint';
 
@@ -273,6 +281,7 @@ const hasValidPriceVariants = priceVariants => {
 const OrderPanel = props => {
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const intl = useIntl();
   const location = useLocation();
   const history = useHistory();
@@ -441,11 +450,8 @@ const OrderPanel = props => {
     const { bio, privateData } = currentUser?.attributes?.profile || {};
     const { area_of_expertise = [], industry_expertise = [] } = privateData || {};
 
-    if (!bio || area_of_expertise.length === 0 || industry_expertise.length === 0) {
-      alert(
-        'Please complete your profile before unlocking hurdle. Bio, area of expertise and industry expertise are required.'
-      );
-      history.push('/profile-settings');
+    if (true || !bio || area_of_expertise.length === 0 || industry_expertise.length === 0) {
+      setShowProfileModal(true);
       return;
     }
 
@@ -461,6 +467,11 @@ const OrderPanel = props => {
       console.error('Error fetching Stripe URL:', error);
       setLoading(false);
     }
+  };
+
+  const handleProfileModalClose = () => {
+    setShowProfileModal(false);
+    history.push('/profile-settings');
   };
 
   return (
@@ -653,6 +664,26 @@ const OrderPanel = props => {
           </PrimaryButton>
         )}
       </div>
+      <Modal
+        id="ProfileIncompleteModal"
+        isOpen={showProfileModal}
+        onClose={handleProfileModalClose}
+        onManageDisableScrolling={onManageDisableScrolling}
+        usePortal
+      >
+        <div className={css.profileModalContent}>
+          <IconAlert className={css.profileModalIcon} />
+          <h2 className={css.profileModalTitle}>
+            <FormattedMessage id="OrderPanel.profileIncompleteTitle" />
+          </h2>
+          <p className={css.profileModalDescription}>
+            <FormattedMessage id="OrderPanel.profileIncompleteDescription" />
+          </p>
+          <PrimaryButton className={css.profileModalButton} onClick={handleProfileModalClose}>
+            <FormattedMessage id="OrderPanel.profileIncompleteAction" />
+          </PrimaryButton>
+        </div>
+      </Modal>
     </div>
   );
 };

@@ -83,8 +83,9 @@
   --colorStatusFinalState: var(--colorGrey600);
 
   /* ================ Font ================ */
-  --fontFamily: -apple-system, BlinkMacSystemFont, 'Inter', Helvetica, Arial, sans-serif,
+  --fontFamily: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Inter', Helvetica, Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --fontFamilyHeading: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Inter', Helvetica, Arial, sans-serif;
 
   --fontWeightRegular: 400;
   --fontWeightMedium: 500;
@@ -267,6 +268,7 @@ a:hover {
 }
 
 h1 {
+  font-family: var(--fontFamilyHeading);
   font-size: 24px;
   line-height: 24px;
   font-weight: var(--fontWeightBlack);
@@ -286,6 +288,7 @@ h1 {
 }
 
 h2 {
+  font-family: var(--fontFamilyHeading);
   font-size: 21px;
   line-height: 24px;
   font-weight: var(--fontWeightBold);
@@ -306,6 +309,7 @@ h2 {
 }
 
 h3 {
+  font-family: var(--fontFamilyHeading);
   font-weight: var(--fontWeightBold);
   font-size: 18px;
   line-height: 24px;
@@ -324,6 +328,7 @@ h3 {
 }
 
 h4 {
+  font-family: var(--fontFamilyHeading);
   font-weight: var(--fontWeightBold);
   font-size: 16px;
   line-height: 30px;
@@ -343,6 +348,7 @@ h4 {
 }
 
 h5 {
+  font-family: var(--fontFamilyHeading);
   font-weight: var(--fontWeightMedium);
   font-size: 14px;
   line-height: 18px;
@@ -361,6 +367,7 @@ h5 {
 }
 
 h6 {
+  font-family: var(--fontFamilyHeading);
   font-weight: var(--fontWeightBold);
   font-size: 12px;
   line-height: 18px;
@@ -626,6 +633,7 @@ textarea {
 }
 
 .h1 {
+  font-family: var(--fontFamilyHeading);
   font-weight: var(--fontWeightBlack);
   font-size: 24px;
   line-height: 24px;
@@ -646,6 +654,7 @@ textarea {
 }
 
 .h2 {
+  font-family: var(--fontFamilyHeading);
   font-weight: var(--fontWeightBold);
   font-size: 21px;
   line-height: 24px;
@@ -666,6 +675,7 @@ textarea {
 }
 
 .h3 {
+  font-family: var(--fontFamilyHeading);
   font-weight: var(--fontWeightBold);
   font-size: 18px;
   line-height: 24px;
@@ -684,6 +694,7 @@ textarea {
 }
 
 .h4 {
+  font-family: var(--fontFamilyHeading);
   font-weight: var(--fontWeightBold);
   font-size: 16px;
   line-height: 30px;
@@ -703,6 +714,7 @@ textarea {
 }
 
 .h5 {
+  font-family: var(--fontFamilyHeading);
   font-weight: var(--fontWeightMedium);
   font-size: 14px;
   line-height: 18px;
@@ -721,6 +733,7 @@ textarea {
 }
 
 .h6 {
+  font-family: var(--fontFamilyHeading);
   font-weight: var(--fontWeightBold);
   font-size: 12px;
   line-height: 18px;
