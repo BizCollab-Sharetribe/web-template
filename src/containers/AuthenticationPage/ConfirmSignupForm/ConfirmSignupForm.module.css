@@ -39,6 +39,11 @@
   composes: marketplaceModalBottomWrapper from global;
 }
 
+.jurisdictionCheckbox {
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
 .row,
 .customFields {
   margin-top: 24px;

@@ -6,9 +6,16 @@ import classNames from 'classnames';
 import { FormattedMessage, useIntl } from '../../../util/reactIntl';
 import { propTypes } from '../../../util/types';
 import * as validators from '../../../util/validators';
+import { requiredFieldArrayCheckbox } from '../../../util/validators';
 import { getPropsForCustomUserFieldInputs } from '../../../util/userHelpers';
 
-import { Form, PrimaryButton, FieldTextInput, CustomExtendedDataField } from '../../../components';
+import {
+  Form,
+  PrimaryButton,
+  FieldTextInput,
+  CustomExtendedDataField,
+  FieldCheckboxGroup,
+} from '../../../components';
 
 import FieldSelectUserType from '../FieldSelectUserType';
 import UserFieldDisplayName from '../UserFieldDisplayName';
@@ -168,6 +175,22 @@ const ConfirmSignupFormComponent = props => (
 
           <div className={css.bottomWrapper}>
             {termsAndConditions}
+            <FieldCheckboxGroup
+              className={css.jurisdictionCheckbox}
+              name="australiaJurisdiction"
+              id={formId ? `${formId}.australia-jurisdiction` : 'australia-jurisdiction'}
+              options={[
+                {
+                  key: 'australia-jurisdiction-confirm',
+                  label: intl.formatMessage({
+                    id: 'SignupForm.australiaJurisdictionAcceptText',
+                  }),
+                },
+              ]}
+              validate={requiredFieldArrayCheckbox(
+                intl.formatMessage({ id: 'SignupForm.australiaJurisdictionAcceptRequired' })
+              )}
+            />
             <PrimaryButton type="submit" inProgress={submitInProgress} disabled={submitDisabled}>
               <FormattedMessage id="ConfirmSignupForm.signUp" values={{ idp: idp }} />
             </PrimaryButton>

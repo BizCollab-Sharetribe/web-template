@@ -6,9 +6,16 @@ import classNames from 'classnames';
 import { FormattedMessage, useIntl } from '../../../util/reactIntl';
 import { propTypes } from '../../../util/types';
 import * as validators from '../../../util/validators';
+import { requiredFieldArrayCheckbox } from '../../../util/validators';
 import { getPropsForCustomUserFieldInputs } from '../../../util/userHelpers';
 
-import { Form, PrimaryButton, FieldTextInput, CustomExtendedDataField } from '../../../components';
+import {
+  Form,
+  PrimaryButton,
+  FieldTextInput,
+  CustomExtendedDataField,
+  FieldCheckboxGroup,
+} from '../../../components';
 
 import FieldSelectUserType from '../FieldSelectUserType';
 import UserFieldDisplayName from '../UserFieldDisplayName';
@@ -217,6 +224,23 @@ const SignupFormComponent = props => (
 
           <div className={css.bottomWrapper}>
             {termsAndConditions}
+            <FieldCheckboxGroup
+              className={css.jurisdictionCheckbox}
+              name="australiaJurisdiction"
+              id={formId ? `${formId}.australia-jurisdiction` : 'australia-jurisdiction'}
+              optionLabelClassName={css.finePrint}
+              options={[
+                {
+                  key: 'australia-jurisdiction-confirm',
+                  label: intl.formatMessage({
+                    id: 'SignupForm.australiaJurisdictionAcceptText',
+                  }),
+                },
+              ]}
+              validate={requiredFieldArrayCheckbox(
+                intl.formatMessage({ id: 'SignupForm.australiaJurisdictionAcceptRequired' })
+              )}
+            />
             {isPasswordUsedMoreThanOnce(values) ? (
               <div className={css.error}>
                 <FormattedMessage id="SignupForm.passwordRepeatedOnOtherFields" />

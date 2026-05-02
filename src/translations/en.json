@@ -1451,5 +1451,7 @@
   "ProfileSettingsForm.verifiedBadge": "✓ Verified",
   "OrderPanel.profileIncompleteTitle": "Complete Your Profile",
   "OrderPanel.profileIncompleteDescription": "Please complete your profile before unlocking this Hurdle. Your Bio, Area of Expertise, and Industry Expertise are required.",
-  "OrderPanel.profileIncompleteAction": "Go to Profile Settings"
+  "OrderPanel.profileIncompleteAction": "Go to Profile Settings",
+  "SignupForm.australiaJurisdictionAcceptText": "I confirm that I am currently located in Australia and operating under Australian business jurisdiction.",
+  "SignupForm.australiaJurisdictionAcceptRequired": "You must confirm your Australian jurisdiction to sign up."
 }
