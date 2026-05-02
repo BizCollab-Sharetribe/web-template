@@ -54,6 +54,9 @@ const UserFieldPhoneNumber = props => {
       placeholder={intl.formatMessage({
         id: `${formName}.phoneNumberPlaceholder`,
       })}
+      helpText={intl.formatMessage({
+        id: `phoneNumber.helpText`,
+      })}
       {...validateMaybe}
     />
   );
