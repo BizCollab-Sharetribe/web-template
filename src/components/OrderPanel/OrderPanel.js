@@ -442,6 +442,14 @@ const OrderPanel = props => {
   const { initiateTransactions } = currentUser?.effectivePermissionSet?.attributes || {};
   const isAllowed = initiateTransactions === 'permission/allow';
 
+  const { bio: profileBio, privateData: profilePrivateData } =
+    currentUser?.attributes?.profile || {};
+  const { area_of_expertise: areaOfExpertise = [], industry_expertise: industryExpertise = [] } =
+    profilePrivateData || {};
+  const isBioComplete = !!profileBio;
+  const isAiExpertiseComplete = areaOfExpertise.length > 0;
+  const isIndustryExpertiseComplete = industryExpertise.length > 0;
+
   const getStripeUrl = async () => {
     if (isOwnListing || isClosed) {
       return;
@@ -450,7 +458,7 @@ const OrderPanel = props => {
     const { bio, privateData } = currentUser?.attributes?.profile || {};
     const { area_of_expertise = [], industry_expertise = [] } = privateData || {};
 
-    if (true || !bio || area_of_expertise.length === 0 || industry_expertise.length === 0) {
+    if (!bio || area_of_expertise.length === 0 || industry_expertise.length === 0) {
       setShowProfileModal(true);
       return;
     }
@@ -679,6 +687,44 @@ const OrderPanel = props => {
           <p className={css.profileModalDescription}>
             <FormattedMessage id="OrderPanel.profileIncompleteDescription" />
           </p>
+          <ul className={css.profileStatusList}>
+            <li className={css.profileStatusItem}>
+              <span
+                className={isBioComplete ? css.profileStatusComplete : css.profileStatusIncomplete}
+              >
+                {isBioComplete ? '✓' : '✗'}
+              </span>
+              <span className={css.profileStatusLabel}>
+                <FormattedMessage id="OrderPanel.profileFieldBio" />
+              </span>
+            </li>
+            <li className={css.profileStatusItem}>
+              <span
+                className={
+                  isAiExpertiseComplete ? css.profileStatusComplete : css.profileStatusIncomplete
+                }
+              >
+                {isAiExpertiseComplete ? '✓' : '✗'}
+              </span>
+              <span className={css.profileStatusLabel}>
+                <FormattedMessage id="OrderPanel.profileFieldAiExpertise" />
+              </span>
+            </li>
+            <li className={css.profileStatusItem}>
+              <span
+                className={
+                  isIndustryExpertiseComplete
+                    ? css.profileStatusComplete
+                    : css.profileStatusIncomplete
+                }
+              >
+                {isIndustryExpertiseComplete ? '✓' : '✗'}
+              </span>
+              <span className={css.profileStatusLabel}>
+                <FormattedMessage id="OrderPanel.profileFieldIndustryExpertise" />
+              </span>
+            </li>
+          </ul>
           <PrimaryButton className={css.profileModalButton} onClick={handleProfileModalClose}>
             <FormattedMessage id="OrderPanel.profileIncompleteAction" />
           </PrimaryButton>

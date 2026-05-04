@@ -416,12 +416,22 @@ class ProfileSettingsFormComponent extends Component {
                   </p>
                   <FieldTextInput
                     className={css.row}
-                    type="text"
+                    type="number"
                     id="abn"
                     name="abn"
                     label={intl.formatMessage({ id: 'ProfileSettingsForm.abnLabel' })}
                     placeholder={intl.formatMessage({ id: 'ProfileSettingsForm.abnPlaceholder' })}
                     disabled={isVerified}
+                    validate={validators.composeValidators(
+                      validators.minLength(
+                        intl.formatMessage({ id: 'ProfileSettingsForm.abnInvalidLength' }),
+                        11
+                      ),
+                      validators.maxLength(
+                        intl.formatMessage({ id: 'ProfileSettingsForm.abnInvalidLength' }),
+                        11
+                      )
+                    )}
                   />
                   <FieldTextInput
                     className={classNames(css.row, css.fieldSpacingTop)}
@@ -433,6 +443,7 @@ class ProfileSettingsFormComponent extends Component {
                       id: 'ProfileSettingsForm.githubUsernamePlaceholder',
                     })}
                     disabled={isVerified}
+                    helpText={intl.formatMessage({ id: 'ProfileSettingsForm.githubUsernameHelpText' })}
                   />
                   <p className={css.extraInfo}>
                     <FormattedMessage id="ProfileSettingsForm.verificationDocumentInfo" />
