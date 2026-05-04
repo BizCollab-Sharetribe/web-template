@@ -343,6 +343,10 @@ export class TransactionPanelComponent extends Component {
               </div>
             ) : null}
 
+            <p className={css.dataSafetyNotice}>
+              <FormattedMessage id="TransactionPanel.dataSafetyNotice" />
+            </p>
+
             <InlineTextButton
               className={css.hurdleDetailsLink}
               onClick={() => this.setState({ hurdleDetailsModalOpen: true })}

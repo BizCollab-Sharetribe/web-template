@@ -1457,6 +1457,7 @@
   "OrderPanel.profileFieldAiExpertise": "Areas of AI Expertise",
   "OrderPanel.profileFieldIndustryExpertise": "Industry Expertise",
   "ProfileSettingsForm.abnInvalidLength": "ABN must be exactly 11 digits",
+  "TransactionPanel.dataSafetyNotice": "Keep your data secure. Please use this space for high-level introductions and project scoping only. Do not share passwords, proprietary IP, or sensitive corporate data here.",
   "SignupForm.australiaJurisdictionAcceptText": "I confirm that I am currently located in Australia and operating under Australian business jurisdiction.",
   "SignupForm.australiaJurisdictionAcceptRequired": "You must confirm your Australian jurisdiction to sign up."
 }
