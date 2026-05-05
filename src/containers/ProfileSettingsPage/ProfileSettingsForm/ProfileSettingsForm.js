@@ -422,16 +422,20 @@ class ProfileSettingsFormComponent extends Component {
                     label={intl.formatMessage({ id: 'ProfileSettingsForm.abnLabel' })}
                     placeholder={intl.formatMessage({ id: 'ProfileSettingsForm.abnPlaceholder' })}
                     disabled={isVerified}
-                    validate={validators.composeValidators(
-                      validators.minLength(
-                        intl.formatMessage({ id: 'ProfileSettingsForm.abnInvalidLength' }),
-                        11
-                      ),
-                      validators.maxLength(
-                        intl.formatMessage({ id: 'ProfileSettingsForm.abnInvalidLength' }),
-                        11
-                      )
-                    )}
+                    validate={value =>
+                      value
+                        ? validators.composeValidators(
+                            validators.minLength(
+                              intl.formatMessage({ id: 'ProfileSettingsForm.abnInvalidLength' }),
+                              11
+                            ),
+                            validators.maxLength(
+                              intl.formatMessage({ id: 'ProfileSettingsForm.abnInvalidLength' }),
+                              11
+                            )
+                          )(value)
+                        : undefined
+                    }
                   />
                   <FieldTextInput
                     className={classNames(css.row, css.fieldSpacingTop)}
