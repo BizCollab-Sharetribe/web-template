@@ -444,11 +444,12 @@ const OrderPanel = props => {
 
   const { bio: profileBio, privateData: profilePrivateData } =
     currentUser?.attributes?.profile || {};
-  const { area_of_expertise: areaOfExpertise = [], industry_expertise: industryExpertise = [] } =
+  const { area_of_expertise: areaOfExpertise = [], industry_expertise: industryExpertise = [], linkedIn_profile: linkedInProfile } =
     profilePrivateData || {};
   const isBioComplete = !!profileBio;
   const isAiExpertiseComplete = areaOfExpertise.length > 0;
   const isIndustryExpertiseComplete = industryExpertise.length > 0;
+  const isLinkedInComplete = !!linkedInProfile;
 
   const getStripeUrl = async () => {
     if (isOwnListing || isClosed) {
@@ -456,9 +457,9 @@ const OrderPanel = props => {
     }
 
     const { bio, privateData } = currentUser?.attributes?.profile || {};
-    const { area_of_expertise = [], industry_expertise = [] } = privateData || {};
+    const { area_of_expertise = [], industry_expertise = [], linkedIn_profile } = privateData || {};
 
-    if (!bio || area_of_expertise.length === 0 || industry_expertise.length === 0) {
+    if (!bio || area_of_expertise.length === 0 || industry_expertise.length === 0 || !linkedIn_profile) {
       setShowProfileModal(true);
       return;
     }
@@ -722,6 +723,16 @@ const OrderPanel = props => {
               </span>
               <span className={css.profileStatusLabel}>
                 <FormattedMessage id="OrderPanel.profileFieldIndustryExpertise" />
+              </span>
+            </li>
+            <li className={css.profileStatusItem}>
+              <span
+                className={isLinkedInComplete ? css.profileStatusComplete : css.profileStatusIncomplete}
+              >
+                {isLinkedInComplete ? '✓' : '✗'}
+              </span>
+              <span className={css.profileStatusLabel}>
+                <FormattedMessage id="OrderPanel.profileFieldLinkedIn" />
               </span>
             </li>
           </ul>

@@ -90,9 +90,10 @@ const CustomFieldShortText = props => {
   const { name, fieldConfig, defaultRequiredMessage, formId, intl } = props;
   const { placeholderMessage, isRequired, requiredMessage } = fieldConfig?.saveConfig || {};
   const label = getLabel(fieldConfig);
-  const validateMaybe = isRequired
-    ? { validate: required(requiredMessage || defaultRequiredMessage) }
-    : {};
+  const validateMaybe =
+    isRequired || name === 'priv_linkedIn_profile'
+      ? { validate: required(requiredMessage || defaultRequiredMessage) }
+      : {};
   const placeholder =
     placeholderMessage || intl.formatMessage({ id: 'CustomExtendedDataField.placeholderText' });
 
